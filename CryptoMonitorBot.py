@@ -1,18 +1,17 @@
-import json
-import requests
 # import datetime
 import time
+import requests
 
 key_binance = "https://api.binance.com/api/v3/ticker/price?symbol="
 key_binance_refresh = "https://api.binance.com/api/v3/ticker/price?symbol="
 
-
+my_total= 3.8747
 currencies_binance = ["APEAUD"]
 coin_at_begin_time = 0
 coin_at_end_time = 0
 # begin_time = datetime.datetime.now()
 # end_time = datetime.datetime(2022, 4, 29, 14, 0, 0) This is for the sleep section later in the program
-# Its purpose is so set an alocated time that the next part of the code will run. Currently running on a sleep time of
+# Its purpose is so set an allocated time that the next part of the code will run. Currently, running on a sleep time of
 # (insert) number of seconds
 
 j = 0
@@ -30,7 +29,7 @@ def check_currencies():
         data = data.json()
         j = j + 1
         print(f"{data['symbol']} price is {data['price']}")
-        if data['symbol'] == "APEAUD":
+        if data['symbol'] == 'APEAUD':
             coin_at_begin_time = data['price']
             coin_at_begin_time = float(coin_at_begin_time)
             coin_at_begin_time = float("{:.3f}".format(coin_at_begin_time))
@@ -49,24 +48,27 @@ def check_currencies_at_end():
         data = data.json()
         k = k + 1
         print(f"{data['symbol']} price is {data['price']}")
-        if data['symbol'] == "APEAUD":
+        if data['symbol'] == 'APEAUD':
             coin_at_end_time = data['price']
             coin_at_end_time = float(coin_at_end_time)
             coin_at_end_time = float("{:.3f}".format(coin_at_end_time))
 
 def monitor_ape():
-    global time_delay
     global name_coin_value_at_end_time
     global coin_at_begin_time
     global coin_at_end_time
     print(coin_at_begin_time)
     print(coin_at_end_time)
-    if float(name_coin_value_at_end_time) > float(coin_at_begin_time):
+    if float(name_coin_value_at_end_time) == float(coin_at_begin_time):
+        print('Nothing has changed, you have not lost nor gained')
+    elif float(name_coin_value_at_end_time) > float(coin_at_begin_time):
         print("Value has increased by " + str(name_coin_value_at_end_time))
-    if float(name_coin_value_at_end_time) < float(coin_at_begin_time):
+        print("You have made " + '$' + str(name_coin_value_at_end_time))
+    elif float(name_coin_value_at_end_time) < float(coin_at_begin_time):
         print("Value has decreased by " + str(name_coin_value_at_end_time))
-    else:
-        print('Nothing has changed')
+        print("you have lost " + '$' + str(name_coin_value_at_end_time))
+    # else:
+    #     print('Nothing has changed')
 
 check_currencies()
 time.sleep(120) # Time delay before running next function
@@ -77,8 +79,11 @@ check_currencies_at_end()
 # while datetime.datetime.now()  < end_time:
 #     time.sleep(1)
 # print(end_time)
-name_coin_value_at_end_time = coin_at_end_time - coin_at_begin_time
+name_coin_value_at_end_time = float(coin_at_end_time) - float(coin_at_begin_time)
 
 time.sleep(5)
 monitor_ape()
+
+total_value = my_total * coin_at_end_time
+print("Your total value is " + str(total_value))
 
