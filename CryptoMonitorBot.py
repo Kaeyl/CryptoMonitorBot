@@ -61,14 +61,14 @@ def monitor_ape():
     print(coin_at_end_time)
     if float(name_coin_value_at_end_time) == float(coin_at_begin_time):
         print('Nothing has changed, you have not lost nor gained')
-    elif float(name_coin_value_at_end_time) > float(coin_at_begin_time):
+    elif float(name_coin_value_at_end_time) >= float(coin_at_begin_time):
         print("Value has increased by " + str(name_coin_value_at_end_time))
         print("You have made " + '$' + str(name_coin_value_at_end_time))
-    elif float(name_coin_value_at_end_time) < float(coin_at_begin_time):
+    elif float(name_coin_value_at_end_time) <= float(coin_at_begin_time):
         print("Value has decreased by " + str(name_coin_value_at_end_time))
         print("you have lost " + '$' + str(name_coin_value_at_end_time))
-    # else:
-    #     print('Nothing has changed')
+    else:
+        print('Nothing has changed')
 
 check_currencies()
 time.sleep(120) # Time delay before running next function
